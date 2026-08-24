@@ -1,0 +1,10 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "1 · Portada", "x": 0, "y": 0, "w": 1080, "h": 1350 },
+    { "file": "Delivery.dc.html", "title": "2 · Delivery", "x": 1200, "y": 0, "w": 1080, "h": 1350 },
+    { "file": "Horarios.dc.html", "title": "3 · Horarios", "x": 2400, "y": 0, "w": 1080, "h": 1350 },
+    { "file": "Catalogo.dc.html", "title": "4 · Catálogo", "x": 3600, "y": 0, "w": 1080, "h": 1350 },
+    { "file": "Sigue.dc.html", "title": "5 · Síguenos", "x": 4800, "y": 0, "w": 1080, "h": 1350 }
+  ],
+  "launch": { "view": "canvas" }
+}
