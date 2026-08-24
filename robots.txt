@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://botilleriablackice.github.io/BI/sitemap.xml
