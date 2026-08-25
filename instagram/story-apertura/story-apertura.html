@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Black Ice — Historia de apertura</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #03070f; }
+
+  .stage {
+    position: relative; width: 1080px; height: 1920px; overflow: hidden;
+    background: linear-gradient(165deg, #0b1e3a 0%, #050b18 55%, #030710 100%);
+    color: #f2f7fc; font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  /* ---- fondo animado (13s, continuo) ---- */
+  .band {
+    position: absolute; top: -200px; height: 2400px;
+    background: linear-gradient(180deg, #4fd6ff 0%, #1a9fd6 100%);
+    transform: skewX(-18deg); will-change: transform;
+  }
+  .band-a { left: -280px; width: 620px; opacity: .10; animation: drift-a 13s linear infinite both; }
+  .band-b { right: -300px; width: 520px; opacity: .12; animation: drift-b 13s linear infinite both; }
+  .band-line { right: -430px; width: 74px; opacity: .55; animation: drift-b 13s linear infinite both; }
+  @keyframes drift-a { 0% { transform: skewX(-18deg) translateX(-70px); } 100% { transform: skewX(-18deg) translateX(70px); } }
+  @keyframes drift-b { 0% { transform: skewX(-18deg) translateX(60px); } 100% { transform: skewX(-18deg) translateX(-60px); } }
+
+  .sweep {
+    position: absolute; top: -300px; left: -600px; width: 380px; height: 2600px;
+    background: linear-gradient(90deg, rgba(79,214,255,0) 0%, rgba(79,214,255,.30) 50%, rgba(79,214,255,0) 100%);
+    transform: skewX(-18deg); filter: blur(14px);
+    animation: sweep 13s linear infinite both;
+  }
+  @keyframes sweep {
+    0%   { left: -600px; } 22%  { left: 1300px; }
+    38%  { left: -600px; } 58%  { left: 1300px; }
+    74%  { left: -600px; } 96%  { left: 1300px; }
+    100% { left: 1300px; }
+  }
+
+  .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%); }
+
+  /* ---- escenas: zona segura 300px arriba / 340px abajo ---- */
+  .scene {
+    position: absolute; left: 90px; right: 90px; top: 300px; bottom: 340px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 44px; opacity: 0;
+  }
+
+  .kicker {
+    font-size: 40px; font-weight: 700; letter-spacing: .26em; color: #04101f;
+    background: #4fd6ff; padding: 18px 40px 16px; transform: skewX(-12deg);
+  }
+  .kicker > span { display: block; transform: skewX(12deg); }
+
+  .title {
+    font-family: 'Anton', Impact, 'Arial Narrow', sans-serif; line-height: .93;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe6f0 45%, #8fa3b8 70%, #e8f1fa 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #e8f1fa;
+  }
+  .t-xl { font-size: 176px; }
+  .t-lg { font-size: 150px; }
+
+  .sub { font-size: 52px; font-weight: 500; line-height: 1.3; color: #c7d3e0; max-width: 840px; }
+  .accent { font-family: 'Anton', Impact, sans-serif; font-size: 60px; letter-spacing: .28em; color: #4fd6ff; }
+
+  .logo-wrap { position: relative; width: 460px; height: 460px; display: flex; align-items: center; justify-content: center; }
+  .logo-glow { position: absolute; inset: -40px; background: radial-gradient(circle, rgba(79,214,255,.38) 0%, rgba(79,214,255,0) 68%); }
+  .logo-wrap img { position: relative; width: 460px; height: 460px; filter: drop-shadow(0 20px 50px rgba(0,0,0,.7)); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 900px; }
+  .chip {
+    font-family: 'Anton', Impact, sans-serif; font-size: 46px; letter-spacing: .05em; color: #fff;
+    border: 2px solid rgba(199,211,224,.4); padding: 18px 30px;
+  }
+  .chip.on { color: #4fd6ff; border-color: #4fd6ff; background: rgba(79,214,255,.10); }
+
+  .hours { display: flex; flex-direction: column; gap: 22px; width: 100%; }
+  .hour-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; border: 2px solid rgba(199,211,224,.35); padding: 28px 36px; }
+  .hour-row.on { border-color: #4fd6ff; background: rgba(79,214,255,.10); }
+  .hour-day { font-size: 38px; font-weight: 600; letter-spacing: .12em; color: #c7d3e0; }
+  .hour-row.on .hour-day { color: #4fd6ff; }
+  .hour-val { font-family: 'Anton', Impact, sans-serif; font-size: 58px; color: #fff; white-space: nowrap; }
+
+  .cta { display: flex; align-items: center; gap: 26px; background: #4fd6ff; padding: 26px 46px; transform: skewX(-12deg); }
+  .cta > div { display: flex; align-items: center; gap: 26px; transform: skewX(12deg); }
+  .cta .num { font-family: 'Anton', Impact, sans-serif; font-size: 64px; color: #04101f; white-space: nowrap; }
+  .handle { display: flex; align-items: center; gap: 20px; font-family: 'Anton', Impact, sans-serif; font-size: 52px; color: #fff; letter-spacing: .02em; }
+
+  /* ---- línea de tiempo maestra: 13s ---- */
+  .s1, .s2, .s3, .s4, .s5 { animation-duration: 13s; animation-fill-mode: both; animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+  .s1 { animation-name: sc1; } .s2 { animation-name: sc2; } .s3 { animation-name: sc3; }
+  .s4 { animation-name: sc4; } .s5 { animation-name: sc5; }
+
+  @keyframes sc1 {
+    0%   { opacity: 0; transform: translateY(46px) scale(.94); }
+    4%   { opacity: 1; transform: translateY(0) scale(1); }
+    16%  { opacity: 1; transform: translateY(0) scale(1); }
+    20%  { opacity: 0; transform: translateY(-26px) scale(1.05); }
+    100% { opacity: 0; transform: translateY(-26px) scale(1.05); }
+  }
+  @keyframes sc2 {
+    0%, 20% { opacity: 0; transform: translateY(46px) scale(.96); }
+    24%     { opacity: 1; transform: translateY(0) scale(1); }
+    36%     { opacity: 1; transform: translateY(0) scale(1); }
+    40%     { opacity: 0; transform: translateY(-26px) scale(1.04); }
+    100%    { opacity: 0; transform: translateY(-26px) scale(1.04); }
+  }
+  @keyframes sc3 {
+    0%, 40% { opacity: 0; transform: translateY(46px) scale(.96); }
+    44%     { opacity: 1; transform: translateY(0) scale(1); }
+    56%     { opacity: 1; transform: translateY(0) scale(1); }
+    60%     { opacity: 0; transform: translateY(-26px) scale(1.04); }
+    100%    { opacity: 0; transform: translateY(-26px) scale(1.04); }
+  }
+  @keyframes sc4 {
+    0%, 60% { opacity: 0; transform: translateY(46px) scale(.96); }
+    64%     { opacity: 1; transform: translateY(0) scale(1); }
+    76%     { opacity: 1; transform: translateY(0) scale(1); }
+    80%     { opacity: 0; transform: translateY(-26px) scale(1.04); }
+    100%    { opacity: 0; transform: translateY(-26px) scale(1.04); }
+  }
+  @keyframes sc5 {
+    0%, 80% { opacity: 0; transform: translateY(46px) scale(.96); }
+    85%     { opacity: 1; transform: translateY(0) scale(1); }
+    100%    { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* pulso del CTA final */
+  .pulse { animation: pulse 13s ease-in-out both; }
+  @keyframes pulse {
+    0%, 86% { transform: skewX(-12deg) scale(1); }
+    90%     { transform: skewX(-12deg) scale(1.05); }
+    94%     { transform: skewX(-12deg) scale(1); }
+    97%     { transform: skewX(-12deg) scale(1.05); }
+    100%    { transform: skewX(-12deg) scale(1); }
+  }
+
+  /* barra de progreso inferior */
+  .progress { position: absolute; left: 90px; right: 90px; bottom: 250px; height: 4px; background: rgba(199,211,224,.18); }
+  .progress i { display: block; height: 100%; background: #4fd6ff; width: 0; animation: prog 13s linear both; }
+  @keyframes prog { 0% { width: 0; } 100% { width: 100%; } }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="band band-a"></div>
+  <div class="band band-b"></div>
+  <div class="band band-line"></div>
+  <div class="sweep"></div>
+  <div class="vignette"></div>
+
+  <!-- 1 · Marca -->
+  <div class="scene s1">
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <img src="logo-black-ice.png" alt="Black Ice">
+    </div>
+    <div class="accent">BOTILLERÍA</div>
+  </div>
+
+  <!-- 2 · Nueva en Talca -->
+  <div class="scene s2">
+    <div class="kicker"><span>NUEVA EN TALCA</span></div>
+    <div class="title t-xl">BLACK<br>ICE</div>
+    <div class="sub">Villa Tabunco · Talca</div>
+  </div>
+
+  <!-- 3 · Delivery -->
+  <div class="scene s3">
+    <div class="title t-lg">DELIVERY<br>A TU PUERTA</div>
+    <div class="chips">
+      <div class="chip">CERVEZAS</div>
+      <div class="chip">VINOS</div>
+      <div class="chip">PISCOS</div>
+      <div class="chip">BEBIDAS</div>
+      <div class="chip on">HIELO</div>
+      <div class="chip">SNACKS</div>
+    </div>
+  </div>
+
+  <!-- 4 · Horarios -->
+  <div class="scene s4">
+    <div class="title t-lg">ABIERTO<br>HASTA TARDE</div>
+    <div class="hours">
+      <div class="hour-row"><div class="hour-day">DOM A JUE</div><div class="hour-val">01:00 AM</div></div>
+      <div class="hour-row on"><div class="hour-day">VIE Y SÁB</div><div class="hour-val">03:00 AM</div></div>
+    </div>
+  </div>
+
+  <!-- 5 · Cierre -->
+  <div class="scene s5">
+    <div class="title t-lg">PIDE AHORA</div>
+    <div class="cta pulse">
+      <div>
+        <svg width="58" height="58" viewBox="0 0 24 24" fill="none">
+          <path d="M21 11.5 A8.5 8.5 0 0 1 12.5 20 A8.4 8.4 0 0 1 8.4 19 L3 20.5 L4.5 15.3 A8.5 8.5 0 1 1 21 11.5 Z" stroke="#04101f" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M9 8.8 C9 8.8 9.4 8 10 8.4 C10.6 8.8 11.2 9.9 11 10.4 C10.8 10.9 10.4 11 10.6 11.5 C10.8 12 11.9 13.2 12.8 13.6 C13.3 13.8 13.5 13.3 13.9 13 C14.3 12.7 15.5 13.5 15.8 14 C16.1 14.5 15.2 15.3 14.6 15.4 C13 15.7 9.2 13.5 8.7 10.6 C8.6 9.9 9 8.8 9 8.8 Z" stroke="#04101f" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <div class="num">+56 9 7362 6273</div>
+      </div>
+    </div>
+    <div class="handle">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="#4fd6ff" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="4.2" stroke="#4fd6ff" stroke-width="1.8"/>
+        <circle cx="17.2" cy="6.8" r="1.3" fill="#4fd6ff"/>
+      </svg>
+      @BOTILLERIA.BLACKICE
+    </div>
+  </div>
+
+  <div class="progress"><i></i></div>
+</div>
+</body>
+</html>
