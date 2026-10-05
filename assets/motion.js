@@ -30,7 +30,13 @@
 
   // Divide un elemento en letras dentro de una máscara para que suban desde abajo
   function chars(el) {
-    return SplitText.create(el, { type: 'words,chars', mask: 'words' }).chars;
+    var st = SplitText.create(el, { type: 'words,chars', mask: 'words' });
+    // Dejar espacio en la máscara para tildes y descendentes (Á, ñ, ¿)
+    (st.masks || []).forEach(function (m) {
+      m.style.paddingTop = '.22em'; m.style.marginTop = '-.22em';
+      m.style.paddingBottom = '.1em'; m.style.marginBottom = '-.1em';
+    });
+    return st.chars;
   }
 
   // ---------- Precargador: contador 0–100 y cortina hacia arriba ----------
@@ -39,7 +45,8 @@
     heroChars = heroChars.concat(chars(el));
   });
   gsap.set(heroChars, { yPercent: 115 });
-  gsap.set('.p-intro .fade, #status', { autoAlpha: 0, y: 24 });
+  gsap.set('.p-intro .fade', { autoAlpha: 0, y: 24 });
+  gsap.set('#status', { autoAlpha: 0 });
 
   if (lenis) lenis.stop();
   var counter = { v: 0 };
@@ -52,19 +59,21 @@
     .to('.loader-count', { yPercent: 60, autoAlpha: 0, duration: 0.5, ease: 'power2.in' }, 1.7)
     .to(loader, { yPercent: -100, duration: 1, ease: 'power4.inOut' }, 2.05)
     .to(heroChars, { yPercent: 0, duration: 1.1, ease: 'power4.out', stagger: 0.022 }, 2.45)
-    .to('#status, .p-intro .fade', { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1 }, 2.9);
+    .to('#status', { autoAlpha: 1, duration: 0.6, ease: 'power2.out' }, 2.7)
+    .to('.p-intro .fade', { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1 }, 2.9);
 
   // ---------- Escenas que dependen del tamaño de pantalla ----------
   var mm = gsap.matchMedia();
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
-  mm.add('(min-width: 901px)', function () {
+  mm.add('(min-width: 0px)', function () {
     // Portada: los paneles avanzan de lado mientras bajas
     var heroTrack = document.getElementById('hero-track');
     var heroTween = gsap.to(heroTrack, {
       x: function () { return -(heroTrack.scrollWidth - innerWidth); },
       ease: 'none',
       scrollTrigger: {
-        trigger: '#hero', pin: true, scrub: 1, invalidateOnRefresh: true,
+        trigger: '#hero', pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
         end: function () { return '+=' + (heroTrack.scrollWidth - innerWidth); }
       }
     });
@@ -78,11 +87,14 @@
       x: function () { return -(catTrack.scrollWidth - innerWidth); },
       ease: 'none',
       scrollTrigger: {
-        trigger: '#catalogo', pin: true, scrub: 1, invalidateOnRefresh: true,
+        trigger: '#catalogo', pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
         end: function () { return '+=' + (catTrack.scrollWidth - innerWidth); }
       }
     });
 
+  });
+
+  mm.add('(min-width: 901px)', function () {
     // Botellas flotantes en la sección de pedido
     document.querySelectorAll('.float').forEach(function (el) {
       gsap.to(el, { yPercent: parseFloat(el.dataset.speed) * 160, rotate: parseFloat(el.dataset.speed) * 30, ease: 'none', scrollTrigger: { trigger: '.order', start: 'top bottom', end: 'bottom top', scrub: true } });
