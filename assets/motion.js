@@ -1,5 +1,6 @@
 // Animaciones de la portada, scroll horizontal y textos. Requiere GSAP (+ScrollTrigger, SplitText) y Lenis.
-// Si algo no carga o el usuario pidió reducir movimiento, la página queda estática y legible.
+// Si algo no carga, la página queda estática y legible. Con 'reducir movimiento' se quitan las animaciones
+// automáticas (precargador, letras, cinta) pero se mantienen las que sigue el dedo al hacer scroll.
 (function () {
   var hideLoader = window.__hideLoader || function () {};
   if (!window.gsap || !window.ScrollTrigger || !window.SplitText) { hideLoader(); return; }
@@ -8,12 +9,11 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
 
-  if (reduce) { hideLoader(); return; }
   root.classList.add('anim');
 
   // Scroll suave con inercia, sincronizado con ScrollTrigger
   var lenis = null;
-  if (window.Lenis) {
+  if (window.Lenis && !reduce) {
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
@@ -39,6 +39,7 @@
     return st.chars;
   }
 
+  if (reduce) { hideLoader(); } else {
   // ---------- Precargador: contador 0–100 y cortina hacia arriba ----------
   var heroChars = [];
   document.querySelectorAll('#hero-title .sans, #hero-title .serif').forEach(function (el) {
@@ -61,6 +62,7 @@
     .to(heroChars, { yPercent: 0, duration: 1.1, ease: 'power4.out', stagger: 0.022 }, 2.45)
     .to('#status', { autoAlpha: 1, duration: 0.6, ease: 'power2.out' }, 2.7)
     .to('.p-intro .fade', { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1 }, 2.9);
+  }
 
   // ---------- Escenas que dependen del tamaño de pantalla ----------
   var mm = gsap.matchMedia();
@@ -114,6 +116,7 @@
     gsap.fromTo(row, { xPercent: d }, { xPercent: -d, ease: 'none', scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 
+  if (!reduce) {
   // Títulos que suben letra por letra al entrar
   document.querySelectorAll('.cat-intro h2 > span, .order h2 > span, .hours h2 .serif, .values .word').forEach(function (el) {
     var c = chars(el);
@@ -144,6 +147,7 @@
 
   // Tarjetas de horario
   gsap.from('.hour', { y: 40, autoAlpha: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12, scrollTrigger: { trigger: '.hours-grid', start: 'top 85%' } });
+  }
 
   // Firma gigante: las letras se estiran hacia abajo al llegar al final
   gsap.fromTo('#giant span', { scaleY: 0.6 }, {
