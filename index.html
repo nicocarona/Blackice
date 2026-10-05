@@ -8,7 +8,7 @@
 <meta name="robots" content="index, follow">
 <meta name="geo.region" content="CL-ML">
 <meta name="geo.placename" content="Talca">
-<meta name="theme-color" content="#07090f">
+<meta name="theme-color" content="#0d0c0b">
 <link rel="canonical" href="https://botilleriablackice.github.io/BI/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Botillería Black Ice">
@@ -74,15 +74,15 @@
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
-    --bg:#07090f;
-    --bg-2:#0d1120;
-    --ink:#fff;
-    --muted:#a3acc4;
-    --ice:#7fdcff;
-    --line:rgba(255,255,255,.12);
+    --bg:#0d0c0b;
+    --bg-2:#17140f;
+    --ink:#f5efe4;
+    --muted:#b3a893;
+    --ice:#e3a63e;
+    --line:rgba(245,239,228,.12);
     --gutter:clamp(1.25rem,5vw,5.5rem);
     --s1:1.5rem;--s2:3rem;--s3:6rem;--s4:9rem;
-    --wa:#25d366;
+    --wa:#e3a63e;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -95,16 +95,17 @@
 
   /* Botones: respuesta al presionar, no al soltar */
   .btn{display:inline-flex;align-items:center;gap:.6rem;font-weight:600;font-size:1rem;padding:1.05rem 1.9rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .1s ease-out,background-color .15s,box-shadow .2s;-webkit-user-select:none;user-select:none;touch-action:manipulation}
-  .btn:hover{box-shadow:0 0 0 6px rgba(127,220,255,.18)}
+  .btn:hover{box-shadow:0 0 0 6px rgba(227,166,62,.18)}
   .btn:active{transform:scale(.97)}
-  .btn--wa{background:var(--wa);color:#04140a}
+  .btn--wa{background:var(--wa);color:#1a1206}
+  .btn--wa:hover{background:#efb752}
   .btn--ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
   .btn--ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
   a:focus-visible,button:focus-visible{outline:2px solid var(--ice);outline-offset:3px;border-radius:999px}
   .wa-icon{width:1.25em;height:1.25em;flex:none}
 
   /* NAV: material translúcido, el contenido pasa por debajo */
-  .nav{position:sticky;top:0;z-index:50;background:rgba(7,9,15,.62);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);transition:box-shadow .2s}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(13,12,11,.62);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);transition:box-shadow .2s}
   .nav.scrolled{box-shadow:0 1px 0 var(--line)}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:4.5rem}
   .brand{display:flex;align-items:center;gap:.75rem;font-family:'Anton',sans-serif;font-size:1.375rem;letter-spacing:.04em}
@@ -115,7 +116,7 @@
 
   /* HERO */
   .hero{position:relative;overflow:hidden;padding:var(--s3) 0 var(--s4)}
-  .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:70vw;height:70vw;max-width:60rem;max-height:60rem;background:radial-gradient(closest-side,rgba(127,220,255,.22),rgba(127,220,255,0));pointer-events:none}
+  .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:70vw;height:70vw;max-width:60rem;max-height:60rem;background:radial-gradient(closest-side,rgba(227,166,62,.08),rgba(227,166,62,0));pointer-events:none}
   .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:var(--s2)}
   .status{display:inline-flex;align-items:center;gap:.55rem;font-size:.875rem;font-weight:600;padding:.45rem .9rem;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px var(--line);margin-bottom:var(--s1)}
   .status-dot{width:.55rem;height:.55rem;border-radius:50%;background:#8a93a8}
@@ -124,8 +125,8 @@
   .hero h1 .ice,.hours h2 .ice{color:var(--ice)}
   .hero-sub{font-size:clamp(1.0625rem,1.6vw,1.3125rem);color:var(--muted);max-width:32rem;margin:var(--s1) 0 0}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;margin-top:var(--s2)}
-  .hero-art{position:relative;aspect-ratio:1;max-width:34rem;justify-self:end;width:100%}
-  .hero-art img{width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(127,220,255,.3))}
+  .hero-art{position:relative;aspect-ratio:1;max-width:40rem;justify-self:end;width:100%}
+  .hero-art img{width:100%;height:auto;-webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent 99%);mask-image:radial-gradient(closest-side,#000 70%,transparent 99%)}
 
   /* Franja de beneficios */
   .band{border-block:1px solid var(--line);background:var(--bg-2)}
@@ -147,19 +148,19 @@
   .arrow svg{width:1.25rem;height:1.25rem}
   .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(17rem,22rem);gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:0 var(--gutter) 1rem;scroll-padding-inline:var(--gutter);scrollbar-width:none;max-width:90rem;margin:0 auto}
   .rail::-webkit-scrollbar{display:none}
-  .card{--c:#fff;--c2:#ccc;position:relative;scroll-snap-align:start;border-radius:1.5rem;overflow:hidden;min-height:31rem;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(90% 60% at 50% 38%,var(--c) 0%,var(--c) 35%,var(--c2) 100%);color:#0b0b0b;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
-  .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+  .card{position:relative;scroll-snap-align:start;border-radius:1.5rem;overflow:hidden;min-height:31rem;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(85% 55% at 50% 36%,#3a2c18 0%,#1a1612 70%);box-shadow:inset 0 0 0 1px rgba(227,166,62,.18);color:var(--ink);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+  .card:hover{transform:translateY(-8px);box-shadow:inset 0 0 0 1px rgba(227,166,62,.45),0 30px 60px -20px rgba(0,0,0,.7)}
   .card:active{transform:scale(.98)}
   .card-num{font-weight:700;font-size:.8125rem;letter-spacing:.14em;opacity:.7}
-  .card-art{align-self:center;width:62%;max-width:11rem;color:rgba(0,0,0,.82)}
+  .card-art{align-self:center;width:62%;max-width:11rem;color:rgba(245,239,228,.85)}
   .card-art svg{width:100%;height:auto}
   .card-art:has(.card-img){width:100%;max-width:none;height:16rem;margin:.25rem 0 1rem;display:flex;align-items:center;justify-content:center}
-  .card-img{max-height:100%;max-width:100%;width:auto;height:auto;mix-blend-mode:multiply;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+  .card-img{max-height:100%;max-width:100%;width:auto;height:auto;filter:drop-shadow(0 14px 20px rgba(0,0,0,.45));transition:transform .7s cubic-bezier(.2,.8,.2,1)}
   .card-img + svg{display:none}
   .card:hover .card-img{transform:scale(1.08) translateY(-4px)}
   .card h3{font-size:2.75rem;margin:0}
   .card p{margin:.35rem 0 1.1rem;font-size:.9375rem;font-weight:500;opacity:.78}
-  .card-cta{display:inline-flex;align-items:center;gap:.4rem;font-weight:700;font-size:.9375rem;padding:.7rem 1.15rem;border-radius:999px;background:rgba(0,0,0,.85);color:#fff;align-self:flex-start}
+  .card-cta{display:inline-flex;align-items:center;gap:.4rem;font-weight:700;font-size:.9375rem;padding:.7rem 1.15rem;border-radius:999px;background:var(--ice);color:#1a1206;align-self:flex-start}
 
   /* HORARIO */
   .hours{padding:var(--s3) 0;background:var(--bg-2)}
@@ -168,7 +169,7 @@
   
   .hours-list{display:grid;gap:1rem}
   .hour{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.5rem 1.75rem;border-radius:1.25rem;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--line)}
-  .hour.today{background:rgba(127,220,255,.1);box-shadow:inset 0 0 0 1.5px rgba(127,220,255,.55)}
+  .hour.today{background:rgba(227,166,62,.1);box-shadow:inset 0 0 0 1.5px rgba(227,166,62,.55)}
   .hour-day{font-weight:600}
   .hour-day small{display:block;font-weight:500;font-size:.8125rem;color:var(--ice);letter-spacing:.08em;text-transform:uppercase;min-height:1.2em}
   .hour-time{white-space:nowrap;font-family:'Anton',sans-serif;font-size:clamp(1.75rem,3vw,2.5rem);letter-spacing:.01em}
@@ -178,7 +179,7 @@
   .local p{font-size:1.0625rem;color:var(--muted);max-width:42rem;margin:0}
 
   /* CTA FINAL */
-  .cta{position:relative;overflow:hidden;margin:var(--s3) auto 0;padding:var(--s3) var(--gutter);text-align:center;background:linear-gradient(180deg,var(--bg) 0%,#0b2a3a 100%)}
+  .cta{position:relative;overflow:hidden;margin:var(--s3) auto 0;padding:var(--s3) var(--gutter);text-align:center;background:linear-gradient(180deg,var(--bg) 0%,#2a1d0c 100%)}
   .cta h2{font-size:clamp(3rem,9vw,8rem)}
   .cta p{color:var(--muted);margin:var(--s1) auto var(--s2);max-width:30rem}
 
@@ -212,7 +213,7 @@
   @media (max-width:900px){
     .hero{padding-top:var(--s2)}
     .hero .wrap{grid-template-columns:1fr}
-    .hero-art{order:-1;max-width:14rem;justify-self:start;margin-bottom:-1rem}
+    .hero-art{order:-1;max-width:20rem;justify-self:center;margin:-1rem 0 -2.5rem}
     .band .wrap{grid-template-columns:1fr}
     .band-item{padding:var(--s1) 0}
     .band-item + .band-item{padding-left:0;border-left:0;border-top:1px solid var(--line)}
@@ -257,7 +258,7 @@
 <nav class="nav" id="nav" aria-label="Principal">
   <div class="wrap">
     <a href="#" class="brand" aria-label="Black Ice, inicio">
-      <img class="brand-mark" src="assets/logo-mark.png" alt="" width="160" height="124">
+      <img class="brand-mark" src="assets/logo-mark-hero.webp" alt="" width="240" height="192">
       BLACK ICE
     </a>
     <div class="nav-links">
@@ -280,8 +281,8 @@
           <a class="btn btn--ghost" href="#catalogo">Ver catálogo</a>
         </div>
       </div>
-      <div class="hero-art rise d1"><div data-parallax="0.18">
-        <img src="assets/logo-black-ice-dark.png" alt="Logo de Botillería Black Ice, Talca" width="800" height="800"></div>
+      <div class="hero-art rise d1"><div data-parallax="0.08">
+        <img src="assets/logo-black-ice-hero.webp" alt="Logo de Botillería Black Ice, Talca" width="1254" height="1254" fetchpriority="high"></div>
       </div>
     </div>
   </header>
@@ -316,32 +317,32 @@
     </div>
 
     <div class="rail" id="rail" data-reveal>
-      <a class="card" style="--c:#fff1cc;--c2:#f2b33d" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20cervezas">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20cervezas">
         <span class="card-num">01</span>
         <div class="card-art"><img class="card-img" src="assets/products/cervezas.webp" alt="Lata de cerveza Escudo Silver" width="239" height="563" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M22 34h62v86a10 10 0 0 1-10 10H32a10 10 0 0 1-10-10Z"/><path d="M84 52h12a10 10 0 0 1 10 10v26a10 10 0 0 1-10 10H84"/><path d="M22 34c-6-14 6-24 16-18 4-10 20-12 26-2 10-6 24 2 20 20"/><path d="M40 56v56M53 56v56M66 56v56"/></svg></div>
         <div><h3 class="display">Cervezas</h3><p>Nacionales, importadas y artesanales.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#fbe3ea;--c2:#c94a6a" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20vino">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20vino">
         <span class="card-num">02</span>
         <div class="card-art"><img class="card-img" src="assets/products/vino.webp" alt="Botella de vino tinto Casillero del Diablo" width="168" height="562" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M30 10h60c4 30 2 56-30 60-32-4-34-30-30-60Z"/><path d="M33 34h54"/><path d="M60 70v52M38 128h44"/></svg></div>
         <div><h3 class="display">Vinos</h3><p>Tintos, blancos y espumantes.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#fbf6dc;--c2:#d6c062" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20pisco">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20pisco">
         <span class="card-num">03</span>
         <div class="card-art"><img class="card-img" src="assets/products/pisco.webp" alt="Botella de pisco Mistral 35°" width="350" height="609" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M50 6h20v10H50zM52 16v22c-14 6-20 16-20 30v58a8 8 0 0 0 8 8h40a8 8 0 0 0 8-8V68c0-14-6-24-20-30V16"/><path d="M32 78h56v34H32z"/></svg></div>
         <div><h3 class="display">Piscos</h3><p>Para la piscola de siempre.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#ffe4e0;--c2:#e8503f" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20bebidas">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20bebidas">
         <span class="card-num">04</span>
         <div class="card-art"><img class="card-img" src="assets/products/bebidas.webp" alt="Botella de Coca-Cola 3 litros" width="219" height="569" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M36 14h48l6 12v96a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8V26Z"/><path d="M30 26h60M30 120h60"/><path d="M30 56h60v34H30z"/></svg></div>
         <div><h3 class="display">Bebidas</h3><p>Gaseosas, energéticas y jugos.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#eefaff;--c2:#6cc3e8" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20hielo">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20hielo">
         <span class="card-num">05</span>
         <div class="card-art"><img class="card-img" src="assets/products/hielo.webp" alt="Bolsa de hielo en cubos" width="739" height="900" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M60 22 100 42v48l-40 20-40-20V42Z"/><path d="M20 42l40 20 40-20M60 62v48"/><path d="M36 40l10-5M76 82l8-4"/></svg></div>
         <div><h3 class="display">Hielo</h3><p>Para que nada llegue tibio.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#fff0e0;--c2:#ee8a35" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20snacks">
+      <a class="card" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20snacks">
         <span class="card-num">06</span>
         <div class="card-art"><img class="card-img" src="assets/products/snacks.webp" alt="Bolsa de papas fritas Lay's corte americano" width="600" height="900" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M26 16h68l-6 12 6 12v66l-6 12 6 12H26l6-12-6-12V40l6-12Z"/><path d="M44 62c6-8 26-8 32 0M40 82h40"/></svg></div>
         <div><h3 class="display">Snacks</h3><p>Papas, maní y algo para picar.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
