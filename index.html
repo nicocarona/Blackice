@@ -71,6 +71,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
 <style>
   :root{
     --bg:#07090f;
@@ -120,7 +121,7 @@
   .status-dot{width:.55rem;height:.55rem;border-radius:50%;background:#8a93a8}
   .status.open .status-dot{background:#3ddc84;box-shadow:0 0 0 4px rgba(61,220,132,.2)}
   .hero h1{font-size:clamp(3.5rem,11vw,10rem)}
-  .hero h1 span{display:block;color:var(--ice)}
+  .hero h1 .ice,.hours h2 .ice{color:var(--ice)}
   .hero-sub{font-size:clamp(1.0625rem,1.6vw,1.3125rem);color:var(--muted);max-width:32rem;margin:var(--s1) 0 0}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;margin-top:var(--s2)}
   .hero-art{position:relative;aspect-ratio:1;max-width:34rem;justify-self:end;width:100%}
@@ -146,25 +147,25 @@
   .arrow svg{width:1.25rem;height:1.25rem}
   .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(17rem,22rem);gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:0 var(--gutter) 1rem;scroll-padding-inline:var(--gutter);scrollbar-width:none;max-width:90rem;margin:0 auto}
   .rail::-webkit-scrollbar{display:none}
-  .card{--c:#f5a623;--c2:#7a4a00;position:relative;scroll-snap-align:start;border-radius:1.5rem;overflow:hidden;min-height:28rem;padding:1.75rem;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(120% 80% at 50% 30%,var(--c) 0%,var(--c2) 70%);color:#0b0b0b;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+  .card{--c:#fff;--c2:#ccc;position:relative;scroll-snap-align:start;border-radius:1.5rem;overflow:hidden;min-height:31rem;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(90% 60% at 50% 38%,var(--c) 0%,var(--c) 35%,var(--c2) 100%);color:#0b0b0b;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+  .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
   .card:active{transform:scale(.98)}
   .card-num{font-weight:700;font-size:.8125rem;letter-spacing:.14em;opacity:.7}
-  .card-art{align-self:center;width:62%;max-width:11rem;color:rgba(0,0,0,.82);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .card-art{align-self:center;width:62%;max-width:11rem;color:rgba(0,0,0,.82);will-change:transform}
   .card-art svg{width:100%;height:auto}
-  .card:hover .card-art{transform:translateY(-6px) rotate(-3deg)}
+  .card-art:has(.card-img){width:auto;max-width:none;margin:-.5rem -1.5rem 0;height:17rem;display:grid;place-items:center}
+  .card-img{height:100%;width:auto;max-width:100%;object-fit:contain;mix-blend-mode:multiply;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+  .card-img + svg{display:none}
+  .card:hover .card-img{transform:scale(1.08) translateY(-4px)}
   .card h3{font-size:2.75rem;margin:0}
   .card p{margin:.35rem 0 1.1rem;font-size:.9375rem;font-weight:500;opacity:.78}
   .card-cta{display:inline-flex;align-items:center;gap:.4rem;font-weight:700;font-size:.9375rem;padding:.7rem 1.15rem;border-radius:999px;background:rgba(0,0,0,.85);color:#fff;align-self:flex-start}
-  .card--light{color:#0b0b0b}
-  .card--dark{color:#fff}
-  .card--dark .card-art{color:rgba(255,255,255,.9)}
-  .card--dark .card-cta{background:#fff;color:#0b0b0b}
 
   /* HORARIO */
   .hours{padding:var(--s3) 0;background:var(--bg-2)}
   .hours .wrap{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);align-items:center}
   .hours h2{font-size:clamp(2.75rem,6vw,5.5rem)}
-  .hours h2 span{color:var(--ice)}
+  
   .hours-list{display:grid;gap:1rem}
   .hour{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.5rem 1.75rem;border-radius:1.25rem;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--line)}
   .hour.today{background:rgba(127,220,255,.1);box-shadow:inset 0 0 0 1.5px rgba(127,220,255,.55)}
@@ -187,6 +188,21 @@
 
   /* CTA flotante en móvil, en la zona del pulgar */
   .fab{display:none}
+
+  /* Transiciones al hacer scroll: aparecen desde abajo, una tras otra */
+  .js .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+  .js .reveal.in{opacity:1;transform:none}
+  /* Titulares que suben línea por línea, recortados por una máscara */
+  .line{display:block;overflow:hidden;padding-bottom:.04em}
+  .line>span{display:block}
+  .js .split .line>span{transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+  .js .split.in .line>span{transform:none}
+  .js .rail .card{opacity:0;transform:translateX(60px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1),box-shadow .5s;transition-delay:var(--d,0s)}
+  .js .rail.in .card{opacity:1;transform:none}
+  .js .rail.in .card:hover{transform:translateY(-8px);transition-delay:0s}
+  .rail.dragging{scroll-snap-type:none;cursor:grabbing}
+  .rail.dragging .card{pointer-events:none}
+  [data-parallax]{will-change:transform}
 
   /* Entrada sutil al cargar */
   .rise{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
@@ -216,12 +232,14 @@
   @media (hover:none){
     .btn:hover,.btn--ghost:hover{box-shadow:none}
     .btn--ghost{box-shadow:inset 0 0 0 1.5px var(--line)}
-    .card:hover .card-art{transform:none}
+    .card:hover,.card:hover .card-img{transform:none;box-shadow:none}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .rise{animation:fade .3s ease both}
-    .card-art,.card{transition:none}
+    .card,.card-img{transition:none}
+    .reveal,.reveal.in,.line>span{transform:none!important;opacity:1!important;transition:opacity .3s ease!important}
+    [data-parallax]{transform:none!important}
     @keyframes fade{from{opacity:0}to{opacity:1}}
   }
   @media (prefers-reduced-transparency:reduce){
@@ -255,30 +273,30 @@
     <div class="wrap">
       <div>
         <div class="status rise" id="status" role="status"><span class="status-dot"></span><span id="status-text">Abierto hasta tarde, todos los días</span></div>
-        <h1 class="display rise d1">La fiesta<span>no para.</span></h1>
+        <h1 class="display split" id="hero-title"><span class="line"><span>La fiesta</span></span><span class="line"><span class="ice">no para.</span></span></h1>
         <p class="hero-sub rise d2">Botillería en Villa Tabunco, Talca. Cervezas, vinos, piscos, bebidas y hielo con delivery rápido, cuando los demás ya cerraron.</p>
         <div class="hero-ctas rise d3" id="hero-ctas">
           <a class="btn btn--wa" href="https://wa.me/56973626273"><svg class="wa-icon"><use href="#wa"/></svg>Pedir por WhatsApp</a>
           <a class="btn btn--ghost" href="#catalogo">Ver catálogo</a>
         </div>
       </div>
-      <div class="hero-art rise d1">
-        <img src="assets/logo-black-ice-dark.png" alt="Logo de Botillería Black Ice, Talca" width="800" height="800">
+      <div class="hero-art rise d1"><div data-parallax="0.18">
+        <img src="assets/logo-black-ice-dark.png" alt="Logo de Botillería Black Ice, Talca" width="800" height="800"></div>
       </div>
     </div>
   </header>
 
   <section class="band" aria-label="Por qué Black Ice">
     <div class="wrap">
-      <div class="band-item">
+      <div class="band-item reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
         <div><h3>Delivery rápido</h3><p>A tu puerta en cualquier sector de Talca.</p></div>
       </div>
-      <div class="band-item">
+      <div class="band-item reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
         <div><h3>Hasta las 3 AM</h3><p>Viernes y sábado. Domingo a jueves hasta la 01:00.</p></div>
       </div>
-      <div class="band-item">
+      <div class="band-item reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z"/></svg>
         <div><h3>Pide por WhatsApp</h3><p>Sin apps ni registros. Escribe y listo.</p></div>
       </div>
@@ -288,8 +306,8 @@
   <section class="catalog" id="catalogo" aria-labelledby="cat-title">
     <div class="wrap catalog-head">
       <div>
-        <p class="eyebrow">Catálogo</p>
-        <h2 class="display" id="cat-title">Elige tu noche</h2>
+        <p class="eyebrow reveal">Catálogo</p>
+        <h2 class="display split" id="cat-title"><span class="line"><span>Elige tu noche</span></span></h2>
       </div>
       <div class="arrows">
         <button class="arrow" type="button" data-dir="-1" aria-label="Anterior"><svg style="transform:scaleX(-1)"><use href="#arrow"/></svg></button>
@@ -297,35 +315,35 @@
       </div>
     </div>
 
-    <div class="rail" id="rail">
-      <a class="card" style="--c:#ffc23d;--c2:#c46a00" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20cervezas">
+    <div class="rail" id="rail" data-reveal>
+      <a class="card" style="--c:#fff1cc;--c2:#f2b33d" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20cervezas">
         <span class="card-num">01</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M22 34h62v86a10 10 0 0 1-10 10H32a10 10 0 0 1-10-10Z"/><path d="M84 52h12a10 10 0 0 1 10 10v26a10 10 0 0 1-10 10H84"/><path d="M22 34c-6-14 6-24 16-18 4-10 20-12 26-2 10-6 24 2 20 20"/><path d="M40 56v56M53 56v56M66 56v56"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144719_db223d34-e5a9-4450-b1ca-c3bbc222c367_min.webp" alt="Cervezas heladas en botella y lata" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M22 34h62v86a10 10 0 0 1-10 10H32a10 10 0 0 1-10-10Z"/><path d="M84 52h12a10 10 0 0 1 10 10v26a10 10 0 0 1-10 10H84"/><path d="M22 34c-6-14 6-24 16-18 4-10 20-12 26-2 10-6 24 2 20 20"/><path d="M40 56v56M53 56v56M66 56v56"/></svg></div>
         <div><h3 class="display">Cervezas</h3><p>Nacionales, importadas y artesanales.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card card--dark" style="--c:#b3204d;--c2:#3b0618" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20vino">
+      <a class="card" style="--c:#fbe3ea;--c2:#c94a6a" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20vino">
         <span class="card-num">02</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M30 10h60c4 30 2 56-30 60-32-4-34-30-30-60Z"/><path d="M33 34h54"/><path d="M60 70v52M38 128h44"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144649_8567f0fa-d7b1-4aea-8742-cce817e77650_min.webp" alt="Botella de vino tinto y copa" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M30 10h60c4 30 2 56-30 60-32-4-34-30-30-60Z"/><path d="M33 34h54"/><path d="M60 70v52M38 128h44"/></svg></div>
         <div><h3 class="display">Vinos</h3><p>Tintos, blancos y espumantes.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#f3e7a6;--c2:#a99a3d" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20pisco">
+      <a class="card" style="--c:#fbf6dc;--c2:#d6c062" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20pisco">
         <span class="card-num">03</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M50 6h20v10H50zM52 16v22c-14 6-20 16-20 30v58a8 8 0 0 0 8 8h40a8 8 0 0 0 8-8V68c0-14-6-24-20-30V16"/><path d="M32 78h56v34H32z"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144650_bf9099a7-be6f-471b-baec-0bf4fb92cad7_min.webp" alt="Botella de pisco y piscola con hielo" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M50 6h20v10H50zM52 16v22c-14 6-20 16-20 30v58a8 8 0 0 0 8 8h40a8 8 0 0 0 8-8V68c0-14-6-24-20-30V16"/><path d="M32 78h56v34H32z"/></svg></div>
         <div><h3 class="display">Piscos</h3><p>Para la piscola de siempre.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card card--dark" style="--c:#ff3b3b;--c2:#7a0010" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20bebidas">
+      <a class="card" style="--c:#ffe4e0;--c2:#e8503f" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20bebidas">
         <span class="card-num">04</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M36 14h48l6 12v96a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8V26Z"/><path d="M30 26h60M30 120h60"/><path d="M30 56h60v34H30z"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144649_6f647330-19e9-445a-b9b0-d3179ade9d76_min.webp" alt="Bebidas gaseosas en botella y lata" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M36 14h48l6 12v96a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8V26Z"/><path d="M30 26h60M30 120h60"/><path d="M30 56h60v34H30z"/></svg></div>
         <div><h3 class="display">Bebidas</h3><p>Gaseosas, energéticas y jugos.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#bdf0ff;--c2:#2a9ccc" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20hielo">
+      <a class="card" style="--c:#eefaff;--c2:#6cc3e8" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20hielo">
         <span class="card-num">05</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M60 22 100 42v48l-40 20-40-20V42Z"/><path d="M20 42l40 20 40-20M60 62v48"/><path d="M36 40l10-5M76 82l8-4"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144649_177eee1e-8322-4739-81b2-5e0c47b14e8c_min.webp" alt="Bolsa de hielo en cubos" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M60 22 100 42v48l-40 20-40-20V42Z"/><path d="M20 42l40 20 40-20M60 62v48"/><path d="M36 40l10-5M76 82l8-4"/></svg></div>
         <div><h3 class="display">Hielo</h3><p>Para que nada llegue tibio.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
-      <a class="card" style="--c:#ff9a3d;--c2:#a83a00" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20snacks">
+      <a class="card" style="--c:#fff0e0;--c2:#ee8a35" href="https://wa.me/56973626273?text=Hola%20Black%20Ice%2C%20quiero%20pedir%20snacks">
         <span class="card-num">06</span>
-        <div class="card-art"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M26 16h68l-6 12 6 12v66l-6 12 6 12H26l6-12-6-12V40l6-12Z"/><path d="M44 62c6-8 26-8 32 0M40 82h40"/></svg></div>
+        <div class="card-art"><img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3ISfTAjakbtJtFndlUQ2bIQjwV0/hf_20261005_144719_95f70c66-4b1e-4cd6-965f-115becdc585e_min.webp" alt="Papas fritas y maní" width="768" height="1024" loading="lazy" decoding="async" onerror="this.remove()"><svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M26 16h68l-6 12 6 12v66l-6 12 6 12H26l6-12-6-12V40l6-12Z"/><path d="M44 62c6-8 26-8 32 0M40 82h40"/></svg></div>
         <div><h3 class="display">Snacks</h3><p>Papas, maní y algo para picar.</p><span class="card-cta">Pedir <svg class="wa-icon" style="width:1rem;height:1rem"><use href="#arrow"/></svg></span></div>
       </a>
     </div>
@@ -334,15 +352,15 @@
   <section class="hours" id="horario" aria-labelledby="hours-title">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Horario extendido</p>
-        <h2 class="display" id="hours-title">Abiertos<br>hasta <span>tarde.</span></h2>
+        <p class="eyebrow reveal">Horario extendido</p>
+        <h2 class="display split" id="hours-title"><span class="line"><span>Abiertos</span></span><span class="line"><span>hasta <em class="ice" style="font-style:normal">tarde.</em></span></span></h2>
       </div>
       <div class="hours-list">
-        <div class="hour" data-days="0,1,2,3,4">
+        <div class="hour reveal" data-days="0,1,2,3,4">
           <div class="hour-day"><small></small>Domingo a jueves</div>
           <div class="hour-time">12:00 – 01:00</div>
         </div>
-        <div class="hour" data-days="5,6">
+        <div class="hour reveal" data-days="5,6">
           <div class="hour-day"><small></small>Viernes y sábado</div>
           <div class="hour-time">12:00 – 03:00</div>
         </div>
@@ -352,15 +370,15 @@
 
   <section class="local" aria-labelledby="local-title">
     <div class="wrap">
-      <p class="eyebrow" id="local-title">Tu botillería cercana en Talca</p>
-      <p>Black Ice es tu botillería en Villa Tabunco, Talca, abierta hasta tarde todos los días. Si buscas una botillería cerca de ti con delivery rápido de cervezas, vinos, piscos, bebidas, hielo y snacks, escríbenos por WhatsApp y recibe tu pedido en minutos en cualquier sector de Talca.</p>
+      <p class="eyebrow reveal" id="local-title">Tu botillería cercana en Talca</p>
+      <p class="reveal" style="--d:.1s">Black Ice es tu botillería en Villa Tabunco, Talca, abierta hasta tarde todos los días. Si buscas una botillería cerca de ti con delivery rápido de cervezas, vinos, piscos, bebidas, hielo y snacks, escríbenos por WhatsApp y recibe tu pedido en minutos en cualquier sector de Talca.</p>
     </div>
   </section>
 
   <section class="cta" aria-labelledby="cta-title">
-    <h2 class="display" id="cta-title">Tu pedido,<br>listo en minutos.</h2>
-    <p>Escríbenos qué necesitas y te lo llevamos.</p>
-    <a class="btn btn--wa" href="https://wa.me/56973626273"><svg class="wa-icon"><use href="#wa"/></svg>Escríbenos por WhatsApp</a>
+    <h2 class="display split" id="cta-title"><span class="line"><span>Tu pedido,</span></span><span class="line"><span>listo en minutos.</span></span></h2>
+    <p class="reveal" style="--d:.15s">Escríbenos qué necesitas y te lo llevamos.</p>
+    <a class="btn btn--wa reveal" style="--d:.25s" href="https://wa.me/56973626273"><svg class="wa-icon"><use href="#wa"/></svg>Escríbenos por WhatsApp</a>
   </section>
 </main>
 
@@ -400,6 +418,68 @@
       rail.scrollBy({left:(card.offsetWidth+20)*+b.dataset.dir,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
     });
   });
+
+  // Transiciones al hacer scroll
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Escalonar elementos hermanos (beneficios, horarios, tarjetas)
+  [['.band-item',.12],['.hour',.12],['.rail .card',.08]].forEach(function(g){
+    document.querySelectorAll(g[0]).forEach(function(el,i){el.style.setProperty('--d',(i*g[1]).toFixed(2)+'s')});
+  });
+  document.querySelectorAll('.split').forEach(function(h){
+    h.querySelectorAll('.line>span').forEach(function(l,i){l.style.setProperty('--d',(i*.09)+'s')});
+  });
+  var targets=document.querySelectorAll('.reveal,.split:not(#hero-title),[data-reveal]');
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{rootMargin:'0px 0px -12% 0px',threshold:.15});
+    targets.forEach(function(t){io.observe(t)});
+  }else{targets.forEach(function(t){t.classList.add('in')})}
+  requestAnimationFrame(function(){document.getElementById('hero-title').classList.add('in')});
+
+  // Parallax suave: solo transform, sincronizado con requestAnimationFrame
+  var par=[].slice.call(document.querySelectorAll('[data-parallax]'));
+  if(par.length && !reduce){
+    var ticking=false;
+    var update=function(){
+      par.forEach(function(el){
+        var r=el.parentNode.getBoundingClientRect();
+        var off=(r.top+r.height/2-innerHeight/2)*+el.dataset.parallax;
+        el.style.transform='translate3d(0,'+off.toFixed(1)+'px,0)';
+      });
+      ticking=false;
+    };
+    addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+    update();
+  }
+
+  // Arrastrar el carrusel con el mouse (en táctil se usa el scroll nativo)
+  (function(){
+    var down=false,moved=false,startX=0,startLeft=0,lastX=0,lastT=0,v=0;
+    rail.addEventListener('pointerdown',function(e){
+      if(e.pointerType!=='mouse'||e.button!==0)return;
+      down=true;moved=false;startX=lastX=e.clientX;startLeft=rail.scrollLeft;lastT=e.timeStamp;v=0;
+    });
+    addEventListener('pointermove',function(e){
+      if(!down)return;
+      var dx=e.clientX-startX;
+      if(!moved&&Math.abs(dx)>6){moved=true;rail.classList.add('dragging')}
+      if(moved){
+        rail.scrollLeft=startLeft-dx; // 1:1 con el puntero
+        var dt=e.timeStamp-lastT; if(dt>0){v=(e.clientX-lastX)/dt;lastX=e.clientX;lastT=e.timeStamp}
+      }
+    });
+    addEventListener('pointerup',function(){
+      if(!down)return; down=false;
+      if(!moved)return;
+      // Proyectar el impulso y dejar que el snap elija la tarjeta más cercana a donde iba
+      var proj=v*1000*0.998/(1-0.998)/1000;
+      rail.classList.remove('dragging');
+      rail.scrollBy({left:-proj,behavior:reduce?'auto':'smooth'});
+      setTimeout(function(){moved=false},0);
+    });
+    rail.addEventListener('click',function(e){if(moved){e.preventDefault()}},true);
+  })();
 
   // Separador de la barra solo cuando hay contenido debajo
   var nav=document.getElementById('nav');
